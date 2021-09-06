@@ -27,6 +27,9 @@ if (!Directory.Exists(dataPath)) {
 bool FileExists(string itemName) =>
     Directory.EnumerateFiles(dataPath).Any(f => f.EndsWith($"*{itemName}.png"));
 
+const string missingScreenShotLink = 
+    "//st.prntscr.com/2021/04/08/1538/img/0_173a7b_211be8ff.png";
+
 foreach (var item in seq) {
     var filePath = Path.Combine(dataPath, $"{item}.png");
 
@@ -46,7 +49,8 @@ foreach (var item in seq) {
                 document.QuerySelector("#screenshot-image")
                     .GetAttribute("src");
 
-            if (imageLink.Contains("imgur")) {
+            if (imageLink.Contains("imgur")
+                || imageLink is missingScreenShotLink) {
                 Console.WriteLine($"{item} Missing Screenshot\n\n");
                 continue;
             }
